@@ -31,6 +31,8 @@ filetype plugin indent on    " required
 let python_highlight_all=1
 syntax on
 
+" Add line numbers
+set nu
 
 
 " Split and it's hotkeys
