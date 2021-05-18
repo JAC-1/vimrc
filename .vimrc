@@ -1,6 +1,5 @@
 set nocompatible              " required
 filetype off                  " required
-set encoding=utf-8
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -13,66 +12,98 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 
-" add all your plugins here (note older versions of Vundle
-" used Bundle instead of Plugin)
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'flazz/vim-colorschemes'
+Plugin 'puremourning/vimspector'
+Plugin 'mhartington/oceanic-next'
+Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'zxqfl/tabnine-vim'
+Plugin 'frazrepo/vim-rainbow'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+"Plugin 'davidhalter/jedi-vim'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'sansyrox/vim-python-virtualenv'
+Plugin 'aserebryakov/vim-todo-lists'
 
-
-" All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" Make syntax look pretty
-let python_highlight_all=1
-syntax on
 
-" Add line numbers
-set nu
+" setting horizontal and vertical splits
+set splitbelow
+set splitright
 
-
-" Split and it's hotkeys
-set splitbellow
+"split navigations
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Pep-8 formatting
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+
+
+" Setting up indendation
+
+au BufNewFile, BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
     \ set fileformat=unix
-    
-" If you require formatting for other lanugages other than Python, edit the following....
-" au BufNewFile,BufRead *.js, *.html, *.css
-    " \ set tabstop=2
-    " \ set softtabstop=2
-    " \ set shiftwidth=2
 
-" python with virtualenv support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
+au BufNewFile, BufRead *.js, *.html, *.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
 
-" Initialize solarized theme
-if has('gui_running')
-  set background=dark
-  colorscheme solarized
-else
-  colorscheme zenburn
-endif
-call togglebg#map("<F5>") " toggles light and dark mode. 
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" setting up pyflakes
+
+let python_highlight_all=1
+syntax on
+
+" nerd tree settings
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+au VimEnter * NERDTree
+			
+" setting up line numbering
+set nu
+
+" Rainbow bracket settings
+let g:rainbow_active = 1
+
+" Add hotkeys for running python files
+autocmd FileType python map <buffer> <C-S-F9> :w<CR>:exec '! clear; python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <C-S-F9> <esc>:w<CR>:exec '! clear; python3' shellescape(@%, 1)<CR>
+
+" Airline Theme config
+let g:airline_theme = 'wombat' 
+let g:airline_powerline_fonts=1
+
+" Vimspector bindings
+let g:vimspector_enable_mappings="VISUAL_STUDIO"
+
+" Clipboard copy
+vnoremap <C-C> :w !xclip -i -sel c<CR><CR>
