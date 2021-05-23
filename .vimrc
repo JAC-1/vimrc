@@ -1,43 +1,92 @@
-set nocompatible              " required
-filetype off                  " required
+syntax on 
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set noerrorbells
+set tabstop=4 softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set nu
+set nowrap
+set smartcase
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
+set encoding=utf-8
 
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+Plug 'tweekmonster/gofmt.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
+Plug 'vim-utils/vim-man'
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-dispatch'
+Plug 'theprimeagen/vim-be-good'
+Plug 'gruvbox-community/gruvbox'
+Plug 'tpope/vim-projectionist'
+Plug 'puremourning/vimspector'
+Plug 'szw/vim-maximizer'
+Plug 'Valloric/YouCompleteMe'
+Plug 'git@github.com:kien/ctrlp.vim.git'
+Plug 'aserebryakov/vim-todo-lists'
+Plug 'turbio/bracey.vim'
+Plug 'othree/xml.vim'
+Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'frazrepo/vim-rainbow'
+
+" Python Specific
+Plug 'sansyrox/vim-python-virtualenv'
+Plug 'zxpfl/tabnine-vim'
 
 
-Plugin 'puremourning/vimspector'
-Plugin 'mhartington/oceanic-next'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'nvie/vim-flake8'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'zxqfl/tabnine-vim'
-Plugin 'frazrepo/vim-rainbow'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-"Plugin 'davidhalter/jedi-vim'
-Plugin 'ycm-core/YouCompleteMe'
-Plugin 'sansyrox/vim-python-virtualenv'
-Plugin 'aserebryakov/vim-todo-lists'
-
-call vundle#end()            " required
-filetype plugin indent on    " required
 
 
-" setting horizontal and vertical splits
-set splitbelow
-set splitright
+
+" NerdTree and the horse you rode in on ...
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
+
+
+" Initialize plugin system
+call plug#end()
+
+colorscheme gruvbox
+set background=dark
+
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
+
+let mapleader=" "
+let g:netrw_browse_split=2
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+
+let g:ctrlp_use_cashing = 0
+
+nnoremap <Leader>+ :vertical resize +5<CR>
+nnoremap <Leader>- :vertical resize -5<CR>
+nnoremap <leader>pv :Ex<CR>
+nnoremap <leader>b :Bracey<CR>
+nnoremap <leader>bs :BraceyStop<CR>
+nnoremap <leader>br :BraceyReload<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+
+" Resize NERDTree 
+let g:NERDTreeWinSize=10
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -45,65 +94,5 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
-
-" Enable folding with the spacebar
-nnoremap <space> za
-
-
-" Setting up indendation
-
-au BufNewFile, BufRead *.py
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=79 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix
-
-au BufNewFile, BufRead *.js, *.html, *.css
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2
-
-highlight BadWhitespace ctermbg=red guibg=darkred
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-" setting up pyflakes
-
-let python_highlight_all=1
-syntax on
-
-" nerd tree settings
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-au VimEnter * NERDTree
-			
-" setting up line numbering
-set nu
-
-" Rainbow bracket settings
-let g:rainbow_active = 1
-
-" Add hotkeys for running python files
-autocmd FileType python map <buffer> <C-S-F9> :w<CR>:exec '! clear; python3' shellescape(@%, 1)<CR>
-autocmd FileType python imap <buffer> <C-S-F9> <esc>:w<CR>:exec '! clear; python3' shellescape(@%, 1)<CR>
-
-" Airline Theme config
-let g:airline_theme = 'wombat' 
-let g:airline_powerline_fonts=1
-
-" Vimspector bindings
-let g:vimspector_enable_mappings="VISUAL_STUDIO"
-
-" Clipboard copy
-vnoremap <C-C> :w !xclip -i -sel c<CR><CR>
+" Esc alternative
+inoremap jj <Esc>
