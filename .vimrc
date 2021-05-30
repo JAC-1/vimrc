@@ -34,19 +34,27 @@ Plug 'gruvbox-community/gruvbox'
 Plug 'tpope/vim-projectionist'
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 Plug 'git@github.com:kien/ctrlp.vim.git'
-Plug 'aserebryakov/vim-todo-lists'
 Plug 'turbio/bracey.vim'
 Plug 'othree/xml.vim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'frazrepo/vim-rainbow'
 
-" Python Specific
+" Python Speciic
 Plug 'sansyrox/vim-python-virtualenv'
-Plug 'zxpfl/tabnine-vim'
 
+" Todo-ish specific
+Plug 'oberblastmeister/neuron.nvim'
 
+" Autocomplete
+" Run git clone --depth 1 https://github.com/codota/tabnine-vim
+set rtp+=~/tabnine-vim
+    
+" Telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 
 
@@ -96,3 +104,9 @@ nnoremap <C-H> <C-W><C-H>
 
 " Esc alternative
 inoremap jj <Esc>
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
