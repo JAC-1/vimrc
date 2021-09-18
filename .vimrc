@@ -41,6 +41,10 @@ Plug 'ryanoasis/vim-devicons'
 " Fuzzy search
 Plug 'ctrlpvim/ctrlp.vim'
 
+" Ruby
+Plug 'ruby-formatter/rufo-vim'
+let g:rufo_auto_formatting = 1
+
 "Zen
 Plug 'junegunn/goyo.vim'
 
