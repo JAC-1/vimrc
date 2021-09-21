@@ -31,11 +31,50 @@ Plug 'mbbill/undotree'
 Plug 'tpope/vim-dispatch'
 Plug 'theprimeagen/vim-be-good'
 Plug 'gruvbox-community/gruvbox'
+Plug 'flazz/vim-colorschemes'
 Plug 'tpope/vim-projectionist'
 Plug 'szw/vim-maximizer'
+Plug 'sainnhe/sonokai'
 " Plug 'Valloric/YouCompleteMe'
 Plug 'othree/xml.vim'
 Plug 'frazrepo/vim-rainbow'
+" Airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_powerline_fonts = 1
+let g:airline_theme='sonokai'
+
+" Deoplete
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+
+" Neosnippet
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+
+
+
+
 " Icons
 Plug 'ryanoasis/vim-devicons'
 " Fuzzy search
@@ -44,6 +83,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Ruby
 Plug 'ruby-formatter/rufo-vim'
 let g:rufo_auto_formatting = 1
+
+" Rust
+Plug 'rust-lang/rust.vim'
+filetype plugin indent on
 
 "Zen
 Plug 'junegunn/goyo.vim'
@@ -73,13 +116,11 @@ call plug#end()
 
 " packadd! dracula
 " syntax enable
-" colorscheme dracula
-colorscheme gruvbox
-set background=dark
+let g:sonokai_style = "andromeda"
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
+colorscheme sonokai
 
-if executable('rg')
-    let g:rg_derive_root='true'
-endif
 
 let mapleader=" "
 "let g:netrw_browse_split=2
@@ -89,6 +130,8 @@ let mapleader=" "
 
 nnoremap <Leader>+ :vertical resize +5<CR>
 nnoremap <Leader>- :vertical resize -5<CR>
+nnoremap <Leader>( :resize -5<CR>
+nnoremap <Leader>) :resize +5<CR>
 nnoremap <leader>pv :Ex<CR>
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>z :Goyo<CR>
@@ -113,4 +156,14 @@ nnoremap <C-H> <C-W><C-H>
 " Esc alternative
 inoremap jj <Esc>
 
+" Terminal remaps
+tnoremap jj <C-\><C-n>
+
+" Session maps
+" Prefered sessions
+let g:sessions_dir = '~/vim-sessions'
+" remap to save
+exec 'nnoremap <Leader>ss :mks! ' . g:sessions_dir . '/'
+" remap load
+exec 'nnoremap <Leader>sr :so ' . g:sessions_dir . '/'
 
