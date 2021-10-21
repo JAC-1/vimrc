@@ -2,3 +2,14 @@ Fonts: https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/IBMPlex
 Plug: https://github.com/junegunn/vim-plug
 
 rbenv gemset: https://github.com/jf/rbenv-gemset
+
+
+bracey requires nodejs to be installed, along with npm for the initial installation of dependencies. Although, in most cases, npm will probably be installed along with nodejs.
+
+bracey does not include it's javascript dependencies in the repository and they must be downloaded separately. after the plugin has been installed, you need to install its dependencies.
+
+    change into the plugins installation directory. This is different for every plugin manager but should be something like
+        cd ~/.vim/bundle/bracey.vim for pathogen/neoBundle/vundle
+        cd ~/.vim/plugged/bracey.vim for plug
+    run npm install --prefix server
+        you can automate this for vim-plug by using the following command in your .vimrc: Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}. This will run the npm command every time you update the plugin as well
