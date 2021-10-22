@@ -1,4 +1,4 @@
-Fonts: https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/IBMPlexMono/Mono
+Fonts: https://www.nerdfonts.com/font-downloads
 Plug: https://github.com/junegunn/vim-plug
 
 rbenv gemset: https://github.com/jf/rbenv-gemset
