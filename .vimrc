@@ -1,6 +1,6 @@
 syntax on 
 
-set noerrorbells
+" set noerrorbells
 set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
@@ -15,6 +15,9 @@ set undofile
 set incsearch
 set encoding=utf-8
 set nohlsearch
+set mouse=a
+set clipboard=unnamed
+set list lcs=tab:\|\ 
 
 set colorcolumn=80
 highlight ColorColumn ctermbg=0 guibg=lightgrey
@@ -24,10 +27,14 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
+" Auto-pair
+Plug 'jiangmiao/auto-pairs'
+" Indent guides
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tweekmonster/gofmt.vim'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-Plug 'tpope/commentary'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-dispatch'
 Plug 'theprimeagen/vim-be-good'
@@ -36,6 +43,8 @@ Plug 'flazz/vim-colorschemes'
 Plug 'tpope/vim-projectionist'
 Plug 'szw/vim-maximizer'
 Plug 'sainnhe/sonokai'
+" JS
+Plug 'pangloss/vim-javascript'
 " Plug 'Valloric/YouCompleteMe'
 Plug 'othree/xml.vim'
 Plug 'frazrepo/vim-rainbow'
@@ -44,6 +53,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='sonokai'
+
+" Live preview - bracy (make sure node is installed)
+Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 
 " Deoplete
 if has('nvim')
