@@ -15,8 +15,6 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 
 
 # Clone vimrc and make a symbolic link
-git clone https://github.com/JAC-1/vimrc.git
-
-ln -s ~/TicTacToe/vimrc/.vimrc ~/.vimrc
+ln -s ~/vimrc/replit/.vimrc ~/.vimrc
 
 vim -c PlugInstall 
