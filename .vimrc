@@ -55,33 +55,11 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='sonokai'
 
 " Live preview - bracy (make sure node is installed)
-Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
+" Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 
-" Deoplete
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startup = 1
-
-" Neosnippet
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startup = 1
-
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
 
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)we
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 
