@@ -29,6 +29,7 @@ call plug#begin('~/.vim/plugged')
 " fzf
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 "emmet
 Plug 'mattn/emmet-vim'
