@@ -1,8 +1,8 @@
-syntax on 
+syntax on
 
-" set noerrorbells
-set tabstop=4 softtabstop=4
-set shiftwidth=4
+set noerrorbells
+set tabstop=2 softtabstop=2
+set shiftwidth=2
 set expandtab
 set smartindent
 set nu
@@ -16,35 +16,33 @@ set incsearch
 set encoding=utf-8
 set nohlsearch
 set mouse=a
-set clipboard=unnamed
-set list lcs=tab:\|\ 
-
+set list lcs=tab:\|\
+set t_Co=256
 set colorcolumn=80
-highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-" Auto-pair
-Plug 'jiangmiao/auto-pairs'
-" Indent guides
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'tweekmonster/gofmt.vim'
+" Plug 'jiangmiao/auto-pairs'
+" fzf
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
+"emmet
+Plug 'mattn/emmet-vim'
+
 Plug 'tpope/vim-commentary'
+Plug 'Yggdroot/indentLine'
+Plug 'tweekmonster/gofmt.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-dispatch'
 Plug 'theprimeagen/vim-be-good'
-Plug 'gruvbox-community/gruvbox'
 Plug 'flazz/vim-colorschemes'
-Plug 'tpope/vim-projectionist'
-Plug 'szw/vim-maximizer'
 Plug 'sainnhe/sonokai'
-" JS
-Plug 'pangloss/vim-javascript'
 " Plug 'Valloric/YouCompleteMe'
 Plug 'othree/xml.vim'
 Plug 'frazrepo/vim-rainbow'
@@ -53,27 +51,78 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='sonokai'
-
-" Live preview - bracy (make sure node is installed)
-" Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
-
-
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)we
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-
+" LSP?
+Plug 'neovim/nvim-lspconfig'
+Plug 'kabouzeid/nvim-lspinstall'
+" Colorscheme Packs
+" Gruvbox
+" Plug 'gruvbox-community/gruvbox'
+" let g:gruvbox_italic = 1
+" let g:gruvbox_contrast_dark = 'medium'
 
 
+" Sonokai
+if has('termguicolors')
+  set termguicolors
+endif
+let g:sonokai_style = "andromeda"
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
+let g:sonokai_transparent_background = 1
+let g:sonokai_cursor = "auto"
 
-" Icons
-Plug 'ryanoasis/vim-devicons'
-" Fuzzy search
-Plug 'ctrlpvim/ctrlp.vim'
+" " Deoplete
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+"   Plug 'Shougo/deoplete.nvim'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+" let g:deoplete#enable_at_startup = 1
+"
+"COC
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+<col style="" span="">
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+
+" formater
+Plug 'chiel92/vim-autoformat'
+au BufWrite * :Autoformat
 
 " Ruby
+Plug 'vim-ruby/vim-ruby'
 Plug 'ruby-formatter/rufo-vim'
 let g:rufo_auto_formatting = 1
+
+" Processing
+Plug 'sophacles/vim-processing'
 
 " Rust
 Plug 'rust-lang/rust.vim'
@@ -81,19 +130,6 @@ filetype plugin indent on
 
 "Zen
 Plug 'junegunn/goyo.vim'
-
-" Python Speciic
-Plug 'sansyrox/vim-python-virtualenv'
-" Ruby Specific
-Plug 'vim-ruby/vim-ruby'
-
-" Todo-ish specific
-Plug 'oberblastmeister/neuron.nvim'
-
-" Autocomplete
-" Run git clone --depth 1 https://github.com/codota/tabnine-vim
-set rtp+=~/tabnine-vim
-    
 
 " NerdTree and the horse you rode in on ...
 Plug 'preservim/nerdtree'
@@ -105,13 +141,7 @@ Plug 'ryanoasis/vim-devicons'
 " Initialize plugin system
 call plug#end()
 
-" packadd! dracula
-" syntax enable
-let g:sonokai_style = "andromeda"
-let g:sonokai_enable_italic = 1
-let g:sonokai_disable_italic_comment = 1
 colorscheme sonokai
-
 
 let mapleader=" "
 "let g:netrw_browse_split=2
@@ -127,9 +157,6 @@ nnoremap <leader>pv :Ex<CR>
 nnoremap <leader>n :NERDTreeToggle<CR>
 nnoremap <leader>z :Goyo<CR>
 
-"" Exit Vim if NERDTree is the only window left.
-"autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-"    \ quit | endif
 
 
 " Open on right
@@ -150,6 +177,14 @@ inoremap jj <Esc>
 " Terminal remaps
 tnoremap jj <C-\><C-n>
 
+" fzf maps
+nmap <C-p> :Files<CR>
+nmap <C-e> :Buffers<CR>
+let g:fzf_action = { 'ctrl-e': 'edit' }
+
+" emmet maps
+let g:user_emmet_leader_key=','
+
 " Session maps
 " Prefered sessions
 let g:sessions_dir = '~/vim-sessions'
@@ -157,4 +192,5 @@ let g:sessions_dir = '~/vim-sessions'
 exec 'nnoremap <Leader>ss :mks! ' . g:sessions_dir . '/'
 " remap load
 exec 'nnoremap <Leader>sr :so ' . g:sessions_dir . '/'
+
 
